@@ -1,26 +1,6 @@
 # 📚 Lumina Archive — Document Intelligence Platform
 
-<<<<<<< HEAD
 A full-stack AI-powered platform that automates book data collection, stores it in a structured backend, and enables intelligent querying via a complete RAG (Retrieval-Augmented Generation) pipeline.
-=======
-A high-performance, full-stack intelligence platform that harmonizes automated data collection, MySQL persistence, and advanced RAG (Retrieval-Augmented Generation) to deliver deep document insights.
-
-## 🖼️ User Interface
-![Dashboard Overview](screenshots/overview.png)
-![Research Terminal](screenshots/chat.png)
-![Document Insight Profile](screenshots/detail.png)
-![Inline RAG Context](screenshots/inline_rag.png)
-
-## 🚀 Key Features
-
-*   **AI Insight Suite**: Every document is automatically processed to generate:
-    *   **Summary**: A concise multi-sentence overview of core content.
-    *   **Genre Classification**: Accurate categorization (e.g., Cybernetics, Mystery, Sci-Fi).
-    *   **Sentiment Analysis**: Tone detection (Positive/Neutral/Negative).
-*   **Smart Recommendation Engine**: "If you like X, you'll like Y" logic powered by semantic embedding similarity.
-*   **Advanced RAG Pipeline**: An intelligent query interface that synthesizes cited answers from multiple records.
-*   **Automated Scraper**: Robust Selenium-based ingestion engine.
->>>>>>> 7d39aef64dcf77f5aa06cba525dc0aa1fb501c72
 
 ---
 
