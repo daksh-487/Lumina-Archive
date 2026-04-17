@@ -10,7 +10,6 @@ A high-performance, full-stack intelligence platform that harmonizes automated d
 
 ## 🚀 Key Features
 
-*   **Premium Obsidian Aesthetic**: A minimalist, high-contrast architectural design language inspired by `obsidianassembly.com`.
 *   **AI Insight Suite**: Every document is automatically processed to generate:
     *   **Summary**: A concise multi-sentence overview of core content.
     *   **Genre Classification**: Accurate categorization (e.g., Cybernetics, Mystery, Sci-Fi).
