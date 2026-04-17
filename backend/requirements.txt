@@ -1,0 +1,14 @@
+django>=4.0
+djangorestframework
+django-cors-headers
+mysqlclient
+chromadb
+langchain
+langchain-openai
+langchain-text-splitters
+python-dotenv
+selenium
+faker
+webdriver-manager
+redis
+django-redis

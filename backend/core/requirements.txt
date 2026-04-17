@@ -1,0 +1,17 @@
+Django>=4.2.0
+djangorestframework
+django-cors-headers
+mysqlclient
+selenium
+webdriver-manager
+chromadb>=0.4.0
+langchain
+langchain-openai
+openai
+tiktoken
+python-dotenv
+celery
+redis
+requests
+beautifulsoup4
+faker
