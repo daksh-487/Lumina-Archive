@@ -1,0 +1,11 @@
+# Lumina Archive: Implementation & Architecture Overview
+
+Lumina Archive is a high-performance Document Intelligence Platform built with a modern, decoupled full-stack architecture. The system is designed to automate the lifecycle of document processing—from data ingestion and persistent storage to advanced semantic retrieval and AI-driven analysis.
+
+The architecture is driven by a robust Django REST Framework backend and a premium Next.js 14 frontend. The frontend implements a sophisticated "Obsidian" design language using glassmorphic UI elements and Framer Motion, ensuring a premium user experience. Data ingestion is handled by an automated Selenium-based scraper that populates a MySQL database with structured records.
+
+One of the platform's core technical strengths is its Advanced RAG (Retrieval-Augmented Generation) pipeline. Documents are processed using recursive semantic chunking with a 50-character overlap to preserve context. These chunks are then converted into high-dimensional vectors using OpenAI’s `text-embedding-3-small` model and stored in ChromaDB. This setup enables sub-second semantic search and intelligent Q&A, where the system synthesizes cited answers from relevant document fragments.
+
+To achieve production-grade performance, the platform incorporates a multi-layered optimization strategy. Highly latent LLM operations and RAG results are cached via Redis for 24 hours, significantly reducing response times for recurring queries. Furthermore, document ingestion and vectorization are executed as asynchronous background tasks, ensuring the user interface remains responsive during heavy processing.
+
+The final implementation harmonizes data engineering with generative AI, providing users with an Insight Suite that includes automated summarization, sentiment analysis, and genre classification. This architecture establishes a scalable foundation for document intelligence, balancing deep analytical capabilities with a state-of-the-art aesthetic.

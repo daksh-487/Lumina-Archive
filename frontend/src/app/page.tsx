@@ -8,19 +8,23 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const API_URL = 'https://destinations-shoe-motorola-dozens.trycloudflare.com';
-    fetch(`${API_URL}/api/books/`)
-      .then(res => res.json())
+    const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+    console.log('[Lumina] Fetching books from:', `${API_URL}/api/books/`);
+    fetch(`${API_URL}/api/books/`, {
+      headers: { 'Accept': 'application/json' },
+    })
+      .then(res => {
+          if (!res.ok) throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+          return res.json();
+      })
       .then(data => {
-          setBooks(data);
+          console.log('[Lumina] Books fetched:', data.length, 'books');
+          setBooks(Array.isArray(data) ? data : []);
           setLoading(false);
       })
       .catch(err => {
-          console.error("Failed to fetch books", err);
-          // Fallback data if backend is offline
-          setBooks([
-              { id: 1, title: 'Backend Offline', author: 'Test Author', rating: 4.5, genre: 'Test' }
-          ]);
+          console.error("[Lumina] Failed to fetch books:", err.message);
+          setBooks([]);
           setLoading(false);
       });
   }, []);
@@ -47,6 +51,17 @@ export default function Home() {
             ))}
           </div>
         ) : (
+          books.length === 0 ? (
+            <div className="flex flex-col items-center justify-center py-32 text-center">
+              <div className="w-16 h-16 border border-[#333] rounded-2xl flex items-center justify-center mb-8 bg-[#0A0A0A]">
+                <svg className="w-8 h-8 text-[#555]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
+              </div>
+              <h2 className="text-2xl font-light mb-3 text-white tracking-tight">Archive Empty</h2>
+              <p className="text-[#666] text-sm max-w-md leading-relaxed">
+                The backend server is offline or no books have been uploaded yet. Please ensure the backend is running and accessible.
+              </p>
+            </div>
+          ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-16">
             {books.map((book: any) => (
               <Link href={`/book/${book.id}`} key={book.id} className="group flex flex-col h-full cursor-pointer">
@@ -63,7 +78,7 @@ export default function Home() {
                             {book.genre || 'Literature'}
                         </span>
                         <div className="flex text-[#888] text-[10px] font-mono mt-1">
-                            {book.rating.toFixed(1)} RTG
+                            {(book.rating || 0).toFixed(1)} RTG
                         </div>
                     </div>
                     <h3 className="text-base font-semibold text-white mb-1.5 leading-snug group-hover:underline decoration-1 underline-offset-4">
@@ -74,6 +89,7 @@ export default function Home() {
               </Link>
             ))}
           </div>
+          )
         )}
       </div>
     </main>

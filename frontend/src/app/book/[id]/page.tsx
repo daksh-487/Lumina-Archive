@@ -19,7 +19,7 @@ export default function BookDetail() {
   const ragScrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const API_URL = 'https://destinations-shoe-motorola-dozens.trycloudflare.com';
+    const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
     fetch(`${API_URL}/api/books/${id}/`)
       .then(res => res.json())
       .then(data => {
@@ -36,7 +36,7 @@ export default function BookDetail() {
   useEffect(() => {
     if (book && id) {
       setRecsLoading(true);
-      const API_URL = 'https://destinations-shoe-motorola-dozens.trycloudflare.com';
+      const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
       fetch(`${API_URL}/api/books/${id}/recommend/`)
         .then(res => res.json())
         .then(data => {
@@ -67,7 +67,7 @@ export default function BookDetail() {
     setRagLoading(true);
 
     try {
-      const API_URL = 'https://destinations-shoe-motorola-dozens.trycloudflare.com';
+      const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
       const response = await fetch(`${API_URL}/api/chat/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -220,7 +220,7 @@ export default function BookDetail() {
                         </div>
                         <div className="flex justify-between items-center border border-[#333] px-4 py-3">
                             <span className="font-mono text-xs text-[#888]">RATING</span>
-                            <span className="text-sm uppercase tracking-wider">{book.rating.toFixed(1)} / 5.0</span>
+                            <span className="text-sm uppercase tracking-wider">{(book.rating || 0).toFixed(1)} / 5.0</span>
                         </div>
                     </div>
                 </section>
