@@ -20,7 +20,7 @@ export default function BookDetail() {
 
   useEffect(() => {
     const API_URL = 'https://walks-photographic-rewards-instruments.trycloudflare.com';
-    fetch(`${API_URL}/api/books/${id}/`, { headers: { 'Bypass-Tunnel-Reminder': 'true' } })
+    fetch(`${API_URL}/api/books/${id}/`)
       .then(res => res.json())
       .then(data => {
           setBook(data);
@@ -37,7 +37,7 @@ export default function BookDetail() {
     if (book && id) {
       setRecsLoading(true);
       const API_URL = 'https://walks-photographic-rewards-instruments.trycloudflare.com';
-      fetch(`${API_URL}/api/books/${id}/recommend/`, { headers: { 'Bypass-Tunnel-Reminder': 'true' } })
+      fetch(`${API_URL}/api/books/${id}/recommend/`)
         .then(res => res.json())
         .then(data => {
           setRecommendations(data.recommendations || []);
@@ -70,7 +70,7 @@ export default function BookDetail() {
       const API_URL = 'https://walks-photographic-rewards-instruments.trycloudflare.com';
       const response = await fetch(`${API_URL}/api/chat/`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Bypass-Tunnel-Reminder': 'true' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ question: contextualQuestion, book_id: id })
       });
       const data = await response.json();

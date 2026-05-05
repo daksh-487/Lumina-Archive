@@ -9,7 +9,7 @@ export default function Home() {
 
   useEffect(() => {
     const API_URL = 'https://walks-photographic-rewards-instruments.trycloudflare.com';
-    fetch(`${API_URL}/api/books/`, { headers: { 'Bypass-Tunnel-Reminder': 'true' } })
+    fetch(`${API_URL}/api/books/`)
       .then(res => res.json())
       .then(data => {
           setBooks(data);
