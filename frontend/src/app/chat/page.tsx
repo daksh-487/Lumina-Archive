@@ -25,7 +25,7 @@ export default function Chat() {
     setLoading(true);
 
     try {
-      const API_URL = 'https://d49733d9b735b8.lhr.life';
+      const API_URL = 'https://walks-photographic-rewards-instruments.trycloudflare.com';
       const response = await fetch(`${API_URL}/api/chat/`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'Bypass-Tunnel-Reminder': 'true' },
