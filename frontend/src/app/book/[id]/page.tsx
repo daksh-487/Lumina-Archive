@@ -19,7 +19,8 @@ export default function BookDetail() {
   const ragScrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    fetch(`http://localhost:8000/api/books/${id}/`)
+    const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+    fetch(`${API_URL}/api/books/${id}/`)
       .then(res => res.json())
       .then(data => {
           setBook(data);
@@ -35,7 +36,8 @@ export default function BookDetail() {
   useEffect(() => {
     if (book && id) {
       setRecsLoading(true);
-      fetch(`http://localhost:8000/api/books/${id}/recommend/`)
+      const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+      fetch(`${API_URL}/api/books/${id}/recommend/`)
         .then(res => res.json())
         .then(data => {
           setRecommendations(data.recommendations || []);
@@ -65,7 +67,8 @@ export default function BookDetail() {
     setRagLoading(true);
 
     try {
-      const response = await fetch('http://localhost:8000/api/chat/', {
+      const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+      const response = await fetch(`${API_URL}/api/chat/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ question: contextualQuestion, book_id: id })
