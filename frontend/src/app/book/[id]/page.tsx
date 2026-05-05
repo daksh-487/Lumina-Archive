@@ -19,7 +19,7 @@ export default function BookDetail() {
   const ragScrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const API_URL = 'https://721bb4cfce1a3e.lhr.life';
+    const API_URL = 'https://d49733d9b735b8.lhr.life';
     fetch(`${API_URL}/api/books/${id}/`, { headers: { 'Bypass-Tunnel-Reminder': 'true' } })
       .then(res => res.json())
       .then(data => {
@@ -36,7 +36,7 @@ export default function BookDetail() {
   useEffect(() => {
     if (book && id) {
       setRecsLoading(true);
-      const API_URL = 'https://721bb4cfce1a3e.lhr.life';
+      const API_URL = 'https://d49733d9b735b8.lhr.life';
       fetch(`${API_URL}/api/books/${id}/recommend/`, { headers: { 'Bypass-Tunnel-Reminder': 'true' } })
         .then(res => res.json())
         .then(data => {
@@ -67,7 +67,7 @@ export default function BookDetail() {
     setRagLoading(true);
 
     try {
-      const API_URL = 'https://721bb4cfce1a3e.lhr.life';
+      const API_URL = 'https://d49733d9b735b8.lhr.life';
       const response = await fetch(`${API_URL}/api/chat/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Bypass-Tunnel-Reminder': 'true' },

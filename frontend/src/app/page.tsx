@@ -8,7 +8,7 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const API_URL = 'https://721bb4cfce1a3e.lhr.life';
+    const API_URL = 'https://d49733d9b735b8.lhr.life';
     fetch(`${API_URL}/api/books/`, { headers: { 'Bypass-Tunnel-Reminder': 'true' } })
       .then(res => res.json())
       .then(data => {
