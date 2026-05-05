@@ -107,17 +107,18 @@ class ChatAPIView(APIView):
     """
     def post(self, request):
         question = request.data.get('question')
+        book_id = request.data.get('book_id')
         if not question:
             return Response({"error": "No question provided"}, status=400)
         
         # Improved cache key using question content hash for better collision avoidance
-        cache_key = f"rag_query_{hash(question) % (10 ** 12)}"
+        cache_key = f"rag_query_{hash(question) % (10 ** 12)}_{book_id}"
         cached_result = cache.get(cache_key)
         
         if cached_result:
             return Response({**cached_result, "from_cache": True})
         
-        result = rag_query(question)
+        result = rag_query(question, book_id=book_id)
         
         # Cache results for 24 hours (longer TTL for better performance)
         cache.set(cache_key, result, timeout=60*60*24)

@@ -275,14 +275,14 @@ def get_smart_recommendations(book: Book, limit=4):
         cache.set(cache_key, recommendations, timeout=60*60*24)
         return recommendations
 
-def rag_query(question: str):
+def rag_query(question: str, book_id: int = None):
     """
     Enhanced RAG query with caching and better error handling.
     Performs vector search on ChromaDB, constructs context, and generates LLM response.
     Returns answer with citations for transparency.
     """
     # Check cache first
-    cache_key = f"rag_answer_{hash(question) % (10 ** 12)}"
+    cache_key = f"rag_answer_{hash(question) % (10 ** 12)}_{book_id}"
     cached_answer = cache.get(cache_key)
     if cached_answer:
         return cached_answer
@@ -299,11 +299,15 @@ def rag_query(question: str):
     try:
         question_vector = embeddings.embed_query(question)
         
-        # Retrieve top 5 chunks with semantic relevance
-        results = collection.query(
-            query_embeddings=[question_vector],
-            n_results=5
-        )
+        # Retrieve top chunks with semantic relevance
+        query_kwargs = {
+            "query_embeddings": [question_vector],
+            "n_results": 5
+        }
+        if book_id:
+            query_kwargs["where"] = {"book_id": int(book_id)}
+            
+        results = collection.query(**query_kwargs)
         
         contexts = results.get('documents', [[]])[0] if results.get('documents') else []
         metadatas = results.get('metadatas', [[]])[0] if results.get('metadatas') else []

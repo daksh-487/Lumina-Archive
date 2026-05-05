@@ -68,7 +68,7 @@ export default function BookDetail() {
       const response = await fetch('http://localhost:8000/api/chat/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ question: contextualQuestion })
+        body: JSON.stringify({ question: contextualQuestion, book_id: id })
       });
       const data = await response.json();
       setRagHistory(prev => [...prev, {
