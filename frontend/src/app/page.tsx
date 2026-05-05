@@ -9,7 +9,7 @@ export default function Home() {
 
   useEffect(() => {
     const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
-    fetch(`${API_URL}/api/books/`)
+    fetch(`${API_URL}/api/books/`, { headers: { 'Bypass-Tunnel-Reminder': 'true' } })
       .then(res => res.json())
       .then(data => {
           setBooks(data);

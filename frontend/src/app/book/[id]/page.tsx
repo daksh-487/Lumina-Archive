@@ -20,7 +20,7 @@ export default function BookDetail() {
 
   useEffect(() => {
     const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
-    fetch(`${API_URL}/api/books/${id}/`)
+    fetch(`${API_URL}/api/books/${id}/`, { headers: { 'Bypass-Tunnel-Reminder': 'true' } })
       .then(res => res.json())
       .then(data => {
           setBook(data);
@@ -37,7 +37,7 @@ export default function BookDetail() {
     if (book && id) {
       setRecsLoading(true);
       const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
-      fetch(`${API_URL}/api/books/${id}/recommend/`)
+      fetch(`${API_URL}/api/books/${id}/recommend/`, { headers: { 'Bypass-Tunnel-Reminder': 'true' } })
         .then(res => res.json())
         .then(data => {
           setRecommendations(data.recommendations || []);
@@ -70,7 +70,7 @@ export default function BookDetail() {
       const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
       const response = await fetch(`${API_URL}/api/chat/`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'Bypass-Tunnel-Reminder': 'true' },
         body: JSON.stringify({ question: contextualQuestion, book_id: id })
       });
       const data = await response.json();
