@@ -8,7 +8,7 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const API_URL = 'https://walks-photographic-rewards-instruments.trycloudflare.com';
+    const API_URL = 'https://destinations-shoe-motorola-dozens.trycloudflare.com';
     fetch(`${API_URL}/api/books/`)
       .then(res => res.json())
       .then(data => {

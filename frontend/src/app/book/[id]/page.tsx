@@ -19,7 +19,7 @@ export default function BookDetail() {
   const ragScrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const API_URL = 'https://walks-photographic-rewards-instruments.trycloudflare.com';
+    const API_URL = 'https://destinations-shoe-motorola-dozens.trycloudflare.com';
     fetch(`${API_URL}/api/books/${id}/`)
       .then(res => res.json())
       .then(data => {
@@ -36,7 +36,7 @@ export default function BookDetail() {
   useEffect(() => {
     if (book && id) {
       setRecsLoading(true);
-      const API_URL = 'https://walks-photographic-rewards-instruments.trycloudflare.com';
+      const API_URL = 'https://destinations-shoe-motorola-dozens.trycloudflare.com';
       fetch(`${API_URL}/api/books/${id}/recommend/`)
         .then(res => res.json())
         .then(data => {
@@ -67,7 +67,7 @@ export default function BookDetail() {
     setRagLoading(true);
 
     try {
-      const API_URL = 'https://walks-photographic-rewards-instruments.trycloudflare.com';
+      const API_URL = 'https://destinations-shoe-motorola-dozens.trycloudflare.com';
       const response = await fetch(`${API_URL}/api/chat/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
