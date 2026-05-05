@@ -25,7 +25,7 @@ export default function Chat() {
     setLoading(true);
 
     try {
-      const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+      const API_URL = 'https://721bb4cfce1a3e.lhr.life';
       const response = await fetch(`${API_URL}/api/chat/`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'Bypass-Tunnel-Reminder': 'true' },
