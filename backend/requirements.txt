@@ -1,7 +1,8 @@
 django>=4.0
 djangorestframework
 django-cors-headers
-mysqlclient
+psycopg2-binary
+dj-database-url
 chromadb
 langchain
 langchain-openai
@@ -12,3 +13,5 @@ faker
 webdriver-manager
 redis
 django-redis
+gunicorn
+whitenoise

@@ -66,7 +66,10 @@ class UploadBookAPIView(APIView):
             def ai_worker():
                 process_and_store_book(book)
                 # Clear recommendations cache for all books since a new book was added
-                cache.delete_pattern("recommendations_*")
+                try:
+                    cache.delete_pattern("recommendations_*")
+                except (AttributeError, NotImplementedError):
+                    pass  # LocMemCache doesn't support delete_pattern
                 
             thread = threading.Thread(target=ai_worker)
             thread.start()
