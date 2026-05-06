@@ -177,7 +177,7 @@ export default function Home() {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-16">
             {books.map((book: any) => (
-              <Link href={book.id?.toString().startsWith('fallback') ? '#' : `/book/${book.id}`} key={book.id} className="group flex flex-col h-full cursor-pointer">
+              <Link href={`/book/${book.id}`} key={book.id} className="group flex flex-col h-full cursor-pointer">
                 <div className="relative w-full aspect-[2/3] bg-[#0A0A0A] border border-[#222] overflow-hidden mb-5 transition-colors group-hover:border-[#555]">
                   {book.image_url ? (
                     <img src={book.image_url} alt={book.title} className="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-500" />
