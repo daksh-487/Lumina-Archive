@@ -3,9 +3,122 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 
+// ── Fallback books shown when the backend is offline ──────────────────────────
+const FALLBACK_BOOKS = [
+  {
+    id: 'fallback-1',
+    title: 'The Silent Cipher',
+    author: 'Elena Marchetti',
+    genre: 'Mystery',
+    rating: 4.5,
+    description: 'A cryptographer discovers a hidden message in a centuries-old manuscript that leads her into a web of deception and danger.',
+    image_url: 'https://picsum.photos/seed/obsidian1/400/600',
+  },
+  {
+    id: 'fallback-2',
+    title: 'Echoes of Tomorrow',
+    author: 'James Whitfield',
+    genre: 'Sci-Fi',
+    rating: 4.2,
+    description: 'In a future where memories can be traded, one man discovers his past holds the key to saving humanity.',
+    image_url: 'https://picsum.photos/seed/obsidian2/400/600',
+  },
+  {
+    id: 'fallback-3',
+    title: 'The Obsidian Gate',
+    author: 'Lyra Okonkwo',
+    genre: 'Fantasy',
+    rating: 4.8,
+    description: 'A young scholar finds a doorway to a realm of shadow and light, where ancient powers await the worthy.',
+    image_url: 'https://picsum.photos/seed/obsidian3/400/600',
+  },
+  {
+    id: 'fallback-4',
+    title: 'Beneath the Iron Sky',
+    author: 'Victor Harlan',
+    genre: 'History',
+    rating: 3.9,
+    description: 'A sweeping historical epic set during the industrial revolution, following three families whose fates intertwine.',
+    image_url: 'https://picsum.photos/seed/obsidian4/400/600',
+  },
+  {
+    id: 'fallback-5',
+    title: 'Fractured Light',
+    author: 'Saira Naveena',
+    genre: 'Literature',
+    rating: 4.6,
+    description: 'A luminous novel exploring the bonds of family across continents, told through letters never sent.',
+    image_url: 'https://picsum.photos/seed/obsidian5/400/600',
+  },
+  {
+    id: 'fallback-6',
+    title: 'The Algorithm of Souls',
+    author: 'Nikolai Petrov',
+    genre: 'Sci-Fi',
+    rating: 4.1,
+    description: 'When an AI begins composing music that moves people to tears, its creator questions what it means to feel.',
+    image_url: 'https://picsum.photos/seed/obsidian6/400/600',
+  },
+  {
+    id: 'fallback-7',
+    title: 'Midnight Cartography',
+    author: 'Camille Durand',
+    genre: 'Mystery',
+    rating: 4.3,
+    description: 'A retired mapmaker is drawn back into espionage when a map she drew decades ago resurfaces with impossible accuracy.',
+    image_url: 'https://picsum.photos/seed/obsidian7/400/600',
+  },
+  {
+    id: 'fallback-8',
+    title: 'The Ember Codex',
+    author: 'Rhiannon Blackthorn',
+    genre: 'Fantasy',
+    rating: 4.7,
+    description: 'Fire mages guard a codex of forbidden spells. When one page is stolen, the balance of power shifts forever.',
+    image_url: 'https://picsum.photos/seed/obsidian8/400/600',
+  },
+  {
+    id: 'fallback-9',
+    title: 'Still Water Runs',
+    author: 'Aiden Cross',
+    genre: 'Literature',
+    rating: 4.0,
+    description: 'A meditative exploration of grief and renewal set in the American Pacific Northwest.',
+    image_url: 'https://picsum.photos/seed/obsidian9/400/600',
+  },
+  {
+    id: 'fallback-10',
+    title: 'Axioms of the Void',
+    author: 'Dr. Hana Kim',
+    genre: 'Non-Fiction',
+    rating: 4.4,
+    description: 'A theoretical physicist presents a groundbreaking new framework for understanding dark matter and consciousness.',
+    image_url: 'https://picsum.photos/seed/obsidian10/400/600',
+  },
+  {
+    id: 'fallback-11',
+    title: 'The Vermillion Thread',
+    author: 'Isabelle Chen',
+    genre: 'History',
+    rating: 4.3,
+    description: 'Tracing the Silk Road through the eyes of a merchant woman, this novel illuminates forgotten trade routes and cultures.',
+    image_url: 'https://picsum.photos/seed/obsidian11/400/600',
+  },
+  {
+    id: 'fallback-12',
+    title: 'Neon Requiem',
+    author: 'Marcus Steele',
+    genre: 'Sci-Fi',
+    rating: 4.5,
+    description: 'In a rain-soaked megacity, a detective with cybernetic implants hunts a killer who erases victims from existence.',
+    image_url: 'https://picsum.photos/seed/obsidian12/400/600',
+  },
+];
+
 export default function Home() {
-  const [books, setBooks] = useState<any[]>([]);
+  const [books, setBooks] = useState<any[]>(FALLBACK_BOOKS);
   const [loading, setLoading] = useState(true);
+  const [isLive, setIsLive] = useState(false);
 
   useEffect(() => {
     const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
@@ -19,12 +132,16 @@ export default function Home() {
       })
       .then(data => {
           console.log('[Lumina] Books fetched:', data.length, 'books');
-          setBooks(Array.isArray(data) ? data : []);
+          if (Array.isArray(data) && data.length > 0) {
+            setBooks(data);
+            setIsLive(true);
+          }
+          // If API returns empty array, keep fallback books
           setLoading(false);
       })
       .catch(err => {
           console.error("[Lumina] Failed to fetch books:", err.message);
-          setBooks([]);
+          // Keep fallback books — don't clear them
           setLoading(false);
       });
   }, []);
@@ -39,9 +156,16 @@ export default function Home() {
             </h1>
             <p className="text-sm text-[#888] uppercase tracking-widest">Document Intelligence Archive / 01</p>
           </div>
-          <Link href="/chat" className="text-sm font-medium border border-[#333] hover:border-white hover:bg-white hover:text-black transition-all px-5 py-2 uppercase tracking-wide">
-             Query Archive
-          </Link>
+          <div className="flex items-center gap-4">
+            {!isLive && !loading && (
+              <span className="text-[10px] uppercase font-mono tracking-wider text-[#555] border border-[#222] px-3 py-1.5">
+                Showcase Mode
+              </span>
+            )}
+            <Link href="/chat" className="text-sm font-medium border border-[#333] hover:border-white hover:bg-white hover:text-black transition-all px-5 py-2 uppercase tracking-wide">
+               Query Archive
+            </Link>
+          </div>
         </header>
 
         {loading ? (
@@ -51,20 +175,9 @@ export default function Home() {
             ))}
           </div>
         ) : (
-          books.length === 0 ? (
-            <div className="flex flex-col items-center justify-center py-32 text-center">
-              <div className="w-16 h-16 border border-[#333] rounded-2xl flex items-center justify-center mb-8 bg-[#0A0A0A]">
-                <svg className="w-8 h-8 text-[#555]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
-              </div>
-              <h2 className="text-2xl font-light mb-3 text-white tracking-tight">Archive Empty</h2>
-              <p className="text-[#666] text-sm max-w-md leading-relaxed">
-                The backend server is offline or no books have been uploaded yet. Please ensure the backend is running and accessible.
-              </p>
-            </div>
-          ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-16">
             {books.map((book: any) => (
-              <Link href={`/book/${book.id}`} key={book.id} className="group flex flex-col h-full cursor-pointer">
+              <Link href={book.id?.toString().startsWith('fallback') ? '#' : `/book/${book.id}`} key={book.id} className="group flex flex-col h-full cursor-pointer">
                 <div className="relative w-full aspect-[2/3] bg-[#0A0A0A] border border-[#222] overflow-hidden mb-5 transition-colors group-hover:border-[#555]">
                   {book.image_url ? (
                     <img src={book.image_url} alt={book.title} className="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-500" />
@@ -89,7 +202,6 @@ export default function Home() {
               </Link>
             ))}
           </div>
-          )
         )}
       </div>
     </main>
